@@ -18,10 +18,51 @@ namespace ConsoleApp1
 
         async static Task Main(string[] args)
         {
-            await getWeather();
-            SQLiteConnection sqlite_conn;
+            SQLiteConnection sqlite_conn = CreateConnection();
+            CreateTables(sqlite_conn);
+            await PresentMenuAsync(sqlite_conn);
+            
+        }
 
-            async Task getWeather()
+        static async Task PresentMenuAsync(SQLiteConnection sqlite_conn) 
+        {
+            Console.WriteLine("MENU:");
+            Console.WriteLine("1. Show and save todays forecast");
+            Console.WriteLine("2. Show all saved forecast");
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    await ShowAndSaveTodaysForeacast(sqlite_conn);
+                    break; 
+                case "2":
+                    ShowAllForecasts(sqlite_conn);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void ShowAllForecasts(SQLiteConnection sqlite_conn)
+        {
+            WeatherRepository weatherRepository = new(sqlite_conn);
+            foreach (var weather in weatherRepository.GetAll())
+            {
+                Console.WriteLine(
+                    "=================================\n" +
+                    $"city: {weather.City},\n" +
+                    $"date: {weather.DateTime},\n" +
+                    $"temp: {weather.Temp},\n" +
+                    $"humidity: {weather.Humidity}\n" +
+                    "================================="
+                );
+            }
+        }
+
+        static async Task ShowAndSaveTodaysForeacast(SQLiteConnection sqlite_conn) 
+        {
+            await getWeather(sqlite_conn);
+
+            async Task getWeather(SQLiteConnection sqlite_conn)
             {
                 Console.WriteLine("Getting JSON...");
                 var responseString = await client.GetStringAsync(CherkasyURL);
@@ -35,20 +76,8 @@ namespace ConsoleApp1
                     Console.WriteLine($"weather temp: {weather?.main?.temp}, date: {weather.dt_txt}");
                 }
 
-                sqlite_conn = CreateConnection();
-                CreateTables(sqlite_conn);
-                SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
-                foreach (var weather in weatherForecast?.list)
-                {
-                    sqlite_cmd.CommandText = $"INSERT OR IGNORE INTO WeatherForecasts (town, date_time, temperature, humidity) "
-                        + $"VALUES("
-                        + $"'{weatherForecast.city.name}',"
-                        + $"'{weather.dt}',"
-                        + $"{weather.main.temp.Value.ToString(CultureInfo.InvariantCulture)},"
-                        + $"{weather.main.humidity}"
-                        + $");";
-                    sqlite_cmd.ExecuteNonQuery();
-                }
+                WeatherRepository weatherRepository = new(sqlite_conn);
+                weatherRepository.Save(weatherForecast);
             }
         }
 
@@ -85,21 +114,6 @@ namespace ConsoleApp1
                 + "PRIMARY KEY (town, date_time)"
                 + ");";
             sqlite_cmd.ExecuteNonQuery();
-        }
-
-        static void ReadData(SQLiteConnection conn)
-        {
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT * FROM SampleTable";
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
-            {
-                string myreader = sqlite_datareader.GetString(0);
-                Console.WriteLine(myreader);
-            }
-            conn.Close();
         }
     }
 }
