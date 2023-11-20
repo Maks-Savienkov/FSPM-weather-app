@@ -2,8 +2,8 @@
 {
     public class WeatherInfo
     {
-        public int? dt { get; set; }
-        public WeatherInfoMain main { get; set; }
-        public string dt_txt { get; set; }
+        public int? Dt { get; set; }
+        public WeatherInfoMain Main { get; set; }
+        public string Dt_txt { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     internal class WeatherRepository
     {
-        private SQLiteConnection sqlite_conn;
+        private readonly SQLiteConnection sqlite_conn;
 
         public WeatherRepository(SQLiteConnection sqlite_conn) 
         {
@@ -17,14 +17,14 @@ namespace ConsoleApp1
 
         public void Save(WeatherForecast weatherForecast) {
             SQLiteCommand sqlite_cmd = sqlite_conn.CreateCommand();
-            foreach (var weather in weatherForecast?.list)
+            foreach (var weather in weatherForecast?.List)
             {
                 sqlite_cmd.CommandText = $"INSERT OR IGNORE INTO WeatherForecasts (town, date_time, temperature, humidity) "
                     + $"VALUES("
-                    + $"'{weatherForecast.city.name}',"
-                    + $"'{weather.dt}',"
-                    + $"{weather.main.temp.Value.ToString(CultureInfo.InvariantCulture)},"
-                    + $"{weather.main.humidity}"
+                    + $"'{weatherForecast.City.Name}',"
+                    + $"'{weather.Dt}',"
+                    + $"{weather.Main.Temp.Value.ToString(CultureInfo.InvariantCulture)},"
+                    + $"{weather.Main.Humidity}"
                     + $");";
                 sqlite_cmd.ExecuteNonQuery();
             }

@@ -11,10 +11,10 @@ namespace ConsoleApp1
 
         public WeatherForecastDTO(string city, DateTime dateTime, double temp, double humidity)
         {
-            this.City = city;
-            this.DateTime = dateTime;
-            this.Temp = temp;
-            this.Humidity = humidity;
+            City = city;
+            DateTime = dateTime;
+            Temp = temp;
+            Humidity = humidity;
         }
     }
 }

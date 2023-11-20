@@ -2,14 +2,14 @@
 {
     public class WeatherInfoMain
     {
-        public double? temp { get; set; }
-        public double? feels_like { get; set; }
-        public double? temp_min { get; set; }
-        public double? temp_max { get; set; }
-        public int? pressure { get; set; }
-        public int? sea_level { get; set; }
-        public int? grnd_level { get; set; }
-        public int? humidity { get; set; }
-        public double? temp_kf { get; set; }
+        public double? Temp { get; set; }
+        public double? Feels_like { get; set; }
+        public double? Temp_min { get; set; }
+        public double? Temp_max { get; set; }
+        public int? Pressure { get; set; }
+        public int? Sea_level { get; set; }
+        public int? Grnd_level { get; set; }
+        public int? Humidity { get; set; }
+        public double? Temp_kf { get; set; }
     }
 }

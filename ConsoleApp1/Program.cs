@@ -64,12 +64,12 @@ namespace ConsoleApp1
                 var responseString = await client.GetStringAsync(CherkasyURL);
                 Console.WriteLine("Parsing JSON...");
                 WeatherForecast weatherForecast = JsonSerializer.Deserialize<WeatherForecast>(responseString);
-                Console.WriteLine($"cod: {weatherForecast?.cod}");
-                Console.WriteLine($"City: {weatherForecast?.city?.name}");
-                Console.WriteLine($"list count: {weatherForecast?.list?.Count}");
-                foreach (var weather in weatherForecast?.list)
+                Console.WriteLine($"cod: {weatherForecast?.Cod}");
+                Console.WriteLine($"City: {weatherForecast?.City?.Name}");
+                Console.WriteLine($"list count: {weatherForecast?.List?.Count}");
+                foreach (var weather in weatherForecast?.List)
                 {
-                    Console.WriteLine($"weather temp: {weather?.main?.temp}, date: {weather.dt_txt}");
+                    Console.WriteLine($"weather temp: {weather?.Main?.Temp}, date: {weather.Dt_txt}");
                 }
 
                 WeatherRepository weatherRepository = new(sqlite_conn);
