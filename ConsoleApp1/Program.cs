@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
-using System.Globalization;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
