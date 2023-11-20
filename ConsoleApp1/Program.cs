@@ -48,12 +48,12 @@ namespace ConsoleApp1
             foreach (var weather in weatherRepository.GetAll())
             {
                 Console.WriteLine(
-                    "=================================\n" +
-                    $"city: {weather.City},\n" +
-                    $"date: {weather.DateTime},\n" +
-                    $"temp: {weather.Temp},\n" +
-                    $"humidity: {weather.Humidity}\n" +
-                    "================================="
+                    "=================================\n"
+                    + $"city: {weather.City},\n"
+                    + $"date: {weather.DateTime},\n"
+                    + $"temp: {weather.Temp},\n"
+                    + $"humidity: {weather.Humidity}\n"
+                    + "================================="
                 );
             }
         }
